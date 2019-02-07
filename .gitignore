@@ -1,0 +1,30 @@
+# Ignore the build dir
+build/*
+tests/bin
+
+# Ignore any executables
+bin/*
+
+#Ignore any pyc from imports and egg files
+src/integer_polyomino/__pycache__
+src/integer_polyomino/scripts/__pycache__
+__pycache__
+*.egg-info
+*.eggs
+
+
+# Ignore Mac specific files
+.DS_Store
+
+\#*\#
+.\#*
+*txt
+
+# Ignore checkpoints and private notebooks
+notebooks/.ipynb_checkpoints
+notebooks/*.txt
+notebooks/private*.ipynb
+
+# Ignore data and figures
+data
+figures
