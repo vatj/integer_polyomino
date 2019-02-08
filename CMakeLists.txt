@@ -4,7 +4,7 @@ project(integer_polyomino)
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 # Tell CMake to set the compiler to C++ 17 standards
-SET(CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD 17)
 # Make sure openMP is installed
 find_package(OpenMP)
 if (OPENMP_FOUND)
@@ -14,21 +14,29 @@ if (OPENMP_FOUND)
 endif()
 
 # Set source directory
-SET(SOURCE_DIR "src/integer_polyomino")
+set (SOURCE_DIR "src/integer_polyomino")
+# Set submodule directory
+set (GPMAP_DIR "${SOURCE_DIR}/gpmap")
+set (ASSEMBLY_DIR "${SOURCE_DIR}/assembly")
 # Tell CMake that headers are also in SOURCE_DIR/includes
-include_directories(${SOURCE_DIR}/includes)
+include_directories(${GPMAP_DIR}/includes)
+include_directories(${ASSEMBLY_DIR}/includes)
 # Tell CMake where to find other headers library
 include_directories(lib/polyomino_core/includes)
 include_directories(lib/pybind11/include)
+
 # List the source files
-SET(SOURCES "${SOURCE_DIR}/integer_model.cpp"
-            "${SOURCE_DIR}/genotype_phenotype.cpp"
-            "${SOURCE_DIR}/genotype_iofunc.cpp"
-            "${SOURCE_DIR}/genotype_core_metrics.cpp"
-            "${SOURCE_DIR}/genotype_metrics.cpp"
-            "${SOURCE_DIR}/genotype_generate.cpp"
-            "${SOURCE_DIR}/genotype_duplicate.cpp"
-            "${SOURCE_DIR}/genotype_api.cpp")
+set (SOURCES_GPMAP "${GPMAP_DIR}/mapping.cpp"
+            "${GPMAP_DIR}/io.cpp"
+            "${GPMAP_DIR}/core_metrics.cpp"
+            "${GPMAP_DIR}/metrics.cpp"
+            "${GPMAP_DIR}/generate.cpp"
+            "${GPMAP_DIR}/duplicate.cpp"
+            "${GPMAP_DIR}/gpmap_api.cpp"
+            "${ASSEMBLY_DIR}/integer_model.cpp")
+
+set (SOURCES_ASSEMBLY "${ASSEMBLY_DIR}/integer_model.cpp"
+            "${ASSEMBLY_DIR}/assembly_api.cpp")
 
 
 # # Add and compile the test suite for the cpp functions
@@ -43,4 +51,5 @@ SET(SOURCES "${SOURCE_DIR}/integer_model.cpp"
 
 # Generate Python module
 add_subdirectory(lib/pybind11)
-pybind11_add_module(integer_polyomino ${SOURCES} "${SOURCE_DIR}/bindings.cpp")
+pybind11_add_module(gpmap ${SOURCES_GPMAP} "${GPMAP_DIR}/bindings.cpp")
+pybind11_add_module(assembly ${SOURCES_ASSEMBLY} "${ASSEMBLY_DIR}/bindings.cpp")

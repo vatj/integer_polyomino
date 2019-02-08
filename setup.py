@@ -103,7 +103,7 @@ setup(
     long_description='',
     packages=find_packages('src'),
     package_dir={'':'src'},
-    ext_modules=[CMakeExtension('integer_polyomino/integer_polyomino')],
+    ext_modules=[CMakeExtension('integer_polyomino/assembly'), CMakeExtension('integer_polyomino/gpmap')],
     cmdclass=dict(build_ext=CMakeBuild),
     test_suite='tests',
     zip_safe=False

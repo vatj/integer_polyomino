@@ -1,4 +1,4 @@
-#include "genotype_generate.hpp"
+#include "generate.hpp"
 #include "pybind11/pybind11.h"
 #include <sstream>
 #include <iterator>

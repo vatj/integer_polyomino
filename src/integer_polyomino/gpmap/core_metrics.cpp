@@ -1,4 +1,4 @@
-#include "genotype_core_metrics.hpp"
+#include "core_metrics.hpp"
 #include <pybind11/stl.h>
 
 namespace py = pybind11;

@@ -1,4 +1,4 @@
-#include "genotype_phenotype.hpp"
+#include "mapping.hpp"
 #include "pybind11/pybind11.h"
 #include <sstream>
 #include <iterator>

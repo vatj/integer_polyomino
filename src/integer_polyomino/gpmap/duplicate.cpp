@@ -1,4 +1,4 @@
-#include "genotype_duplicate.hpp"
+#include "duplicate.hpp"
 
 // Necessary to check that genotype.size() / 4 returns desired value
 

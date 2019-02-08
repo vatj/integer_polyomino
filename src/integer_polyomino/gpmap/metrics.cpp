@@ -1,4 +1,4 @@
-#include "genotype_metrics.hpp"
+#include "metrics.hpp"
 #include "pybind11/pybind11.h"
 #include <sstream>
 #include <iterator>
@@ -192,7 +192,7 @@ uint64_t combination_with_repetiton(uint8_t space_size , uint8_t sample_size)
 uint64_t NeutralSize(Genotype genotype, uint32_t N_neutral_colours, uint32_t N_possible_interacting_colours)
 {
   uint8_t neutral_faces = std::count(genotype.begin(),genotype.end(),0);
-  Clean_Genome(genotype, false);
+  // Clean_Genome(genotype, false);
   std::set<uint8_t> unique_cols(genotype.begin(),genotype.end());
 
   uint32_t N_interacting_colours= N_possible_interacting_colours, N_interacting_pairs = (unique_cols.size() - 1) / 2;

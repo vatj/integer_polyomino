@@ -1,15 +1,5 @@
-#include "genotype_iofunc.hpp"
+#include "io.hpp"
 #include <iostream>
-
-// namespace simulation_params
-// {
-//   extern uint16_t n_genes, colours;
-//   extern std::mt19937 RNG_Engine;
-//   extern uint16_t phenotype_builds;
-//   extern uint32_t n_samples;
-//   extern bool allow_duplicates;
-// }
-
 
 std::vector<Genotype> ExhaustiveMinimalGenotypesFiltered(PhenotypeTable* pt,
   uint8_t n_genes, int8_t low_colour, int8_t high_colour);

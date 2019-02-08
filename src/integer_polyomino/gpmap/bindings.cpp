@@ -1,37 +1,18 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include "genotype_api.hpp"
+#include "gpmap_api.hpp"
 
 namespace py = pybind11;
 
 
-PYBIND11_MODULE(integer_polyomino, m) {
-    m.doc() = "pybind11 example plugin"; // optional module docstring
-
-    // Assembly Functions
-    m.def("AssemblePlasticGenotype", &AssemblePlasticGenotypeAPI,
-      "A function which builds a genome, create a new phenotype table and return the Phenotype_IDs of the built polyominoes",
-      py::arg("genome"), py::arg("threshold") = 0.25, py::arg("phenotype_builds") = 40,
-      py::arg("fixed_table") = true, py::arg("determinism") = 1,
-      py::arg("table_file") = std::string("None"));
-
-    m.def("AssemblePlasticGenotypeFrequency", &AssemblePlasticGenotypeFrequencyAPI,
-      "A function which builds a genome, create a new phenotype table and return the Phenotype_IDs of the built polyominoes",
-      py::arg("genome"), py::arg("threshold") = 0.25, py::arg("phenotype_builds") = 40,
-      py::arg("fixed_table") = true, py::arg("determinism") = 1,
-      py::arg("table_file") = std::string("None"));
-
-    m.def("AssemblePlasticGenotypes", &AssemblePlasticGenotypesAPI,
-      "A function which builds genomes, create a new phenotype table and return the Phenotype_IDs of the built polyominoes",
-      py::arg("genomes"), py::arg("threshold") = 0.25, py::arg("phenotype_builds") = 40,
-      py::arg("fixed_table") = true, py::arg("determinism") = 1,
-      py::arg("table_file") = std::string("None"));
-
-    m.def("AssemblePlasticGenotypesFrequency", &AssemblePlasticGenotypesFrequencyAPI,
-      "A function which builds genomes, create a new phenotype table and return the Phenotype_IDs of the built polyominoes and their frequencies",
-      py::arg("genomes"), py::arg("threshold") = 0.25, py::arg("phenotype_builds") = 40,
-      py::arg("fixed_table") = true, py::arg("determinism") = 1,
-      py::arg("table_file") = std::string("None"));
+PYBIND11_MODULE(gpmap, m) {
+    m.doc() = R"pbdoc(
+        Integer Polyomino GPMap Analysis Module
+        --------------------------------------------
+        .. currentmodule:: gpmap
+        .. autosummary::
+           :toctree: _generate
+    )pbdoc"; // optional module docstring
 
     // Genome Space generator functions
 
@@ -138,4 +119,10 @@ PYBIND11_MODULE(integer_polyomino, m) {
     //   .def_readwrite("neutral_weight", &Genotype_Metrics::neutral_weight)
     //   .def("to_dict", &Genotype_Metrics::to_dict);
     // m.def("GenerateTable", &GenerateTableAPI, "Test function to print the phenotype Table", py::arg("genotype"), py::arg("filepath") = "None", py::arg("filename") = "None");
+
+    #ifdef VERSION_INFO
+      m.attr("__version__") = VERSION_INFO;
+    #else
+      m.attr("__version__") = "dev";
+    #endif
 }

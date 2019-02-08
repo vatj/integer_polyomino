@@ -97,19 +97,6 @@ bool FilterDeathRare(std::map<Phenotype_ID,uint16_t> ID_counter) {
   return false;
 }
 
-// Temporary fix
-
-void Clean_Genome(Genotype& genome,bool Remove_Duplicates=false) {
-  IntegerAssembly::StripNoncodingGenotype(genome);
-  // for(int32_t t=1;t<=*std::max_element(genome.begin(),genome.end());t+=2) {
-  //   if(std::count(genome.begin(),genome.end(),t)==0) //genotype doens't contain this face
-  //     std::replace(genome.begin(),genome.end(),t+1,uint32_t(0));
-  //   else //genotype does contain this face
-  //     if(std::find(genome.begin(),genome.end(),t+1)==genome.end()) //genotype doesn't contain conjugate
-  //       std::replace(genome.begin(),genome.end(),t,uint32_t(0));
-  // }
-}
-
 
 // int main() {
 //
