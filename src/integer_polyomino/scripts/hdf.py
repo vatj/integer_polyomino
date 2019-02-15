@@ -1,6 +1,8 @@
+import os, sys
 import pandas as pd
 import numpy as np
 import graph_topo as gt
+
 
 def genome_metric_preprocess(df):
     iso_groups(df)
@@ -37,7 +39,7 @@ def set_metric_preprocess(df):
 def write_to_hdf(file_path, files, store, kind, overwrite):
     for file_name in files:
         if((overwrite) or not(('/' + file_name[:-4]) in store.keys())):
-            df = pd.read_csv(file_path + file_name, sep=' ')
+            df = pd.read_csv(os.path.join(file_path, file_name), sep=' ')
             if(kind == 'set'):
                 set_metric_preprocess(df)
             elif(kind == 'genome'):

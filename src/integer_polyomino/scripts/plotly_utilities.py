@@ -119,6 +119,23 @@ def distribution_metric_phenotype_trace(pID, file_name, metric, hdf):
             'showlegend': True})
     return traces
 
+def distribution_metric_phenotype_trace_dup(pID, file_names, metric, hdf):
+    traces = []
+    for file in file_names:
+        with pd.HDFStore(hdf, mode='r') as store:
+            df = store.select(file_name, where='pIDs == pID')
+        new_colors = ['rgb' + str(rgb) for rgb in sns.color_palette("hls", df.Iso_index.max() + 1)]
+        for iso_index in df.Iso_index.unique():
+            traces.append({
+                'x': df[df['Iso_index'] == iso_index][metric],
+                'type': 'histogram',
+                'name': str(df[df['Iso_index'] == iso_index]['original'].unique()[0]),
+                'marker': dict(color=new_colors[iso_index]),
+                'legendgroup': str(iso_index),
+                'showlegend': True})
+    return traces
+
+
 def distribution_metric_phenotype_dup_trace(pID, genome_file, duplicate_file, metric, hdf):
     traces = []
     with pd.HDFStore(hdf, mode='r') as store:
