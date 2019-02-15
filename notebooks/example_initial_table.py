@@ -36,7 +36,7 @@ if not os.path.exists(data_dir):
 
 p = dict()
 
-p["n_genes"] = 4
+p["n_genes"] = 2
 p["low_colour"] = 0
 p["high_colour"] = 10
 p["threshold"] = 25

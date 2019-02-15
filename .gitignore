@@ -22,6 +22,7 @@ __pycache__
 
 # Ignore checkpoints and private notebooks
 notebooks/.ipynb_checkpoints
+src/integer_polyomino/scripts/.ipynb_checkpoints
 notebooks/*.txt
 notebooks/private*.ipynb
 

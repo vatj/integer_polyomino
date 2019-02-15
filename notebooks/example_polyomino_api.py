@@ -1,7 +1,7 @@
-
+#!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 import sys, os
@@ -10,7 +10,7 @@ import numpy as np
 os.nice(15)
 
 
-# In[ ]:
+# In[2]:
 
 
 import integer_polyomino.assembly as ipa
@@ -19,13 +19,13 @@ sys.path.append(os.path.join(os.getcwd(), "..", "src", "integer_polyomino", "scr
 import graph_topo
 
 
-# In[ ]:
+# In[3]:
 
 
-get_ipython().magic('matplotlib inline')
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[ ]:
+# In[4]:
 
 
 data_dir = os.path.join(os.getcwd(), "..", "data", "V" + ipa.__version__)
@@ -33,37 +33,37 @@ if not os.path.exists(data_dir):
     os.makedirs(data_dir)
 
 
-# In[ ]:
+# In[26]:
 
 
 parameters = dict()
 
-parameters["threshold"] = 0.10
+parameters["threshold"] = 0.25
 parameters["phenotype_builds"] = 120
 parameters["fixed_table"] = False
 parameters["determinism"] = 1
-parameters["table_file"] = os.path.join(data_dir, "PhenotypeTable_D{determinism}.txt")
+parameters["table_file"] = os.path.join(data_dir, "PhenotypeTable_D{determinism}.txt".format(**parameters))
 
 
-# In[ ]:
+# In[27]:
 
 
 ipa.AssemblePlasticGenotype([0,0,1,2,0,0,0,2], **parameters)
 
 
-# In[ ]:
+# In[32]:
 
 
 ipa.AssemblePlasticGenotypeFrequency([0,0,1,2,0,0,0,2], **parameters);
 
 
-# In[ ]:
+# In[30]:
 
 
-ipa.AssemblePlasticGenotypeFrequency([0,0,0, 1,0,0,2,2], **parameters);
+ipa.AssemblePlasticGenotypes([[0,0,0,1,0,0,2,2]], **parameters);
 
 
-# In[ ]:
+# In[35]:
 
 
 p = dict()
@@ -81,25 +81,25 @@ p["gpmap_file"] = os.path.join(data_dir, "gpmap_N{n_genes}_C{high_colour}_T{thre
 p["threshold"] /= 100
 
 
-# In[ ]:
+# In[36]:
 
 
 minimal_genomes = gp.MinimalGenomes(**p);
 
 
-# In[ ]:
+# In[37]:
 
 
 gpmap = gp.MinimalMap(**p);
 
 
-# In[ ]:
+# In[38]:
 
 
 gp.GenotypeNeighbourhood([0,0,1,2], low_colour=-1, high_colour=2);
 
 
-# In[ ]:
+# In[39]:
 
 
 uniques = [];
@@ -107,7 +107,7 @@ for pIDs, genomes in polyo.MinimalMap(**p).items():
     uniques.extend(graph_topo.TrimTopo(genomes))
 
 
-# In[ ]:
+# In[40]:
 
 
 p["n_genes"] = 2
@@ -121,15 +121,33 @@ p["genome_metric_file"] = os.path.join(data_dir, "GenomeMetrics_N{n_genes}_C{gen
 p["set_metric_file"] = os.path.join(data_dir, "SetMetrics_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}.txt".format(**p))
 
 
-# In[ ]:
+# In[41]:
 
 
 gp.MetricSampling(**p)
 
 
+# In[43]:
+
+
+metric_struct = gp.MetricNeighbourhood([0,0,0,1,0,0,0,2], **p)
+neighbourhood = pd.Series([str(x) for x in gp.PhenotypeNeighbourhood([0,0,0,1,0,0,0,2], **p)], dtype="category")
+
+
+# In[45]:
+
+
+neighbourhood.value_counts()
+
+
+# In[24]:
+
+
+
+
+
 # In[ ]:
 
 
-metric_struct = polyo.MetricNeighbourhood([0,0,0,1,0,0,0,2], **p)
-neighbourhood = pd.Series([str(x) for x in polyo.PhenotypeNeighbourhood([0,0,0,1,0,0,0,2], **p)], dtype="category")
+
 

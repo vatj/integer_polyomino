@@ -1,14 +1,14 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 import sys, os
 os.nice(15)
 
 
-# In[2]:
+# In[ ]:
 
 
 import integer_polyomino.assembly as ipa
@@ -17,7 +17,7 @@ sys.path.append(os.path.join(os.getcwd(), "..", "src", "integer_polyomino", "scr
 import graph_topo
 
 
-# In[3]:
+# In[ ]:
 
 
 data_dir = os.path.join(os.getcwd(), "..", "data", "V" + ipa.__version__)
@@ -25,14 +25,14 @@ if not os.path.exists(data_dir):
     os.makedirs(data_dir)
 
 
-# In[4]:
+# In[ ]:
 
 
 p = dict()
 
 p["n_genes"] = 4
 p["low_colour"] = 0
-p["high_colour"] = 6
+p["high_colour"] = 8
 p["threshold"] = 25
 p["phenotype_builds"] = p["n_genes"] * 50
 p["fixed_table"] = False
@@ -61,10 +61,12 @@ p["gen_colour"] = p["high_colour"]
 p["high_colour"] += 2
 p["n_jiggle"] = 1000
 p["dup_aware"] = False
+p["threshold"] = int(p['threshold'] * 100)
 p.pop("genome_file", None)
 p["genomes"] = uniques
 p["genome_metric_file"] = os.path.join(data_dir, "GenomeMetrics_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.txt".format(**p))
 p["set_metric_file"] = os.path.join(data_dir, "SetMetrics_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.txt".format(**p))
+p["threshold"] /= 100
 
 
 # In[ ]:

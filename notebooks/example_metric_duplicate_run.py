@@ -30,9 +30,9 @@ if not os.path.exists(data_dir):
 
 p = dict()
 
-p["n_genes"] = 4
+p["n_genes"] = 3
 p["low_colour"] = 0
-p["high_colour"] = 8
+p["high_colour"] = 6
 p["threshold"] = 25
 p["phenotype_builds"] = p["n_genes"] * 50
 p["fixed_table"] = False

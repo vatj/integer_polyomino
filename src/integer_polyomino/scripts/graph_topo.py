@@ -1,10 +1,6 @@
 import networkx as nx
-# import matplotlib.pyplot as plt
-# from matplotlib.patches import Patch,Rectangle
-# from scipy.interpolate import splprep, splev
 from collections import defaultdict, deque, Counter
 import itertools
-# import seaborn as sns
 
 import numpy as np
 
@@ -66,8 +62,9 @@ def TrimTopo(genotypes):
 
     for genotype in genotypes[1:]:
         ref_graph=Transform_Graph_From_List(genotype)
+        ref_graph_chiral=Transform_Graph_From_List(genotype[::-1])
         for i,comp_graph in enumerate(network_graphs):
-            if nx.is_isomorphic(ref_graph,comp_graph):
+            if (nx.is_isomorphic(ref_graph,comp_graph) || nx.is_isomorphic(ref_graph_chiral, comp_graph)):
                 break
         else:
             uniques.append(genotype)
