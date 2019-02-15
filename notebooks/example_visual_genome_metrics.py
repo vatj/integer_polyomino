@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 # coding: utf-8
 
 # In[ ]:
@@ -33,7 +33,7 @@ import seaborn as sns
 # In[ ]:
 
 
-get_ipython().magic('matplotlib inline')
+# %matplotlib inline
 init_notebook_mode(connected=True)
 sns.set(style="dark", context="talk")
 
@@ -64,14 +64,20 @@ p["table_file"] = os.path.join(data_dir, "PhenotypeTable_D{determinism}.txt".for
 set_metric_file = os.path.join(data_dir, "SetMetrics_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.txt".format(**p))
 
 genome_metric_file = "GenomeMetrics_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}".format(**p)
-file_hdf = 'Processed_GenomeMetrics.h5'
+file_hdf = os.path.join(data_dir, 'Processed_GenomeMetrics.h5')
 
 
 # In[ ]:
 
 
-with pd.HDFStore(data_dir + file_hdf, mode='r') as store:
+with pd.HDFStore(file_hdf, mode='r') as store:
     dfg = store[genome_metric_file]
+
+
+# In[ ]:
+
+
+row = 21
 
 
 # In[ ]:
@@ -95,5 +101,11 @@ iplot(pu.metric_subplots(dfg, [row], p, 'group'))
 # In[ ]:
 
 
-iplot(pu.distribution_metrics_phenotype(pID='{(3, 0)}', file_name = genome_metric_file, hdf=os.path.join(data_dir, file_hdf)))
+iplot(pu.distribution_metrics_phenotype(pID='{(3, 0)}', file_name = genome_metric_file, hdf=file_hdf))
+
+
+# In[ ]:
+
+
+
 

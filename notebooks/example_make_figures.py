@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 # coding: utf-8
 
 # In[ ]:
@@ -24,6 +24,9 @@ import plotly_utilities as pu
 import plotly.graph_objs as go
 from plotly.offline import init_notebook_mode, iplot
 import plotly.io as pio
+pio.orca.config.executable = '/u/fs1/vatj2/.local/bin//orca'
+pio.orca.config.save()
+
 import pandas as pd
 import numpy as np
 from plotly.colors import DEFAULT_PLOTLY_COLORS
@@ -37,13 +40,13 @@ import itertools
 init_notebook_mode(connected=True)
 cf.set_config_file(offline=True)
 
-if not os.path.exists(os.getcwd() + '/../figures'):
-    os.mkdir(os.getcwd() + '/../figures')
-figure_dir = os.getcwd() + '/../figures/'
-
-if not os.path.exists(os.getcwd() + '/../data/V1'):
-    os.mkdir(os.getcwd() + '/../data/V1')
-data_dir = os.getcwd() + "/../data/V1/"
+figure_dir = os.path.join(os.getcwd(), '..', 'figures')
+if not os.path.exists(figure_dir):
+    os.mkdir(figure_dir)
+    
+data_dir = os.path.join(os.getcwd(), ".." , "data", "V" + ipa.__version__)
+if not os.path.exists(data_dir):
+    os.mkdir(data_dir)
 
 
 # In[ ]:
@@ -60,11 +63,11 @@ p["phenotype_builds"] = p["n_genes"] * 50
 p["fixed_table"] = False
 p["determinism"] = 1
 p["n_jiggle"] = 1000
-p["table_file"] = data_dir + "PhenotypeTable_D{determinism}.txt".format(**p)
+p["table_file"] = os.path.join(data_dir, "PhenotypeTable_D{determinism}.txt".format(**p))
 genome_metric_file = "GenomeMetrics_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}".format(**p)
-set_metric_file = data_dir + "SetMetrics_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.txt".format(**p)
-file_hdf = 'Processed_GenomeMetrics.h5'
-gpmap_dir = figure_dir + 'gpmap_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}/'.format(**p)
+set_metric_file = os.path.join(data_dir, "SetMetrics_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.txt".format(**p))
+file_hdf = os.path.join(data_dir, 'Processed_GenomeMetrics.h5')
+gpmap_dir = os.path.join(figure_dir, 'gpmap_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}'.format(**p))
 
 
 # In[ ]:
@@ -73,7 +76,7 @@ gpmap_dir = figure_dir + 'gpmap_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotyp
 p["n_genes"] += 1
 p["phenotype_builds"] = p["n_genes"] * 50
 max_size = 10
-duplicate_set_metric_file = data_dir + "SetMetricsDuplicate_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.txt".format(**p)
+duplicate_set_metric_file = os.path.join(data_dir, "SetMetricsDuplicate_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.txt".format(**p))
 duplicate_genome_metric_file = "GenomeMetricsDuplicate_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}".format(**p)
 p["n_genes"] -= 1
 p["phenotype_builds"] = p["n_genes"] * 50
@@ -114,33 +117,33 @@ if not os.path.exists(gpmap_dir):
 # In[ ]:
 
 
-current_path = gpmap_dir + 'deterministic_vs_multi/'
+current_path = os.path.join(gpmap_dir, 'deterministic_vs_multi')
 if not os.path.exists(current_path):
     os.mkdir(current_path)
 
 for metric, suffixe in itertools.product(metrics, suffixes):
     title = 'Deterministic v.s. Multi ' + metric + suffixe + ' metric in GPmap N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}'.format(**p)
     filename = 'deterministic_vs_multi_' + metric + suffixe + '_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.pdf'.format(**p)
-    pio.write_image(pu.scatter_metric_size(df, metric + suffixe, max_size=max_size, multi=True, title=title), file=current_path + filename)
+    pio.write_image(pu.scatter_metric_size(df, metric + suffixe, max_size=max_size, multi=True, title=title), file=os.path.join(current_path, filename))
 
 
 # In[ ]:
 
 
-current_path = gpmap_dir + 'simple_vs_duplicate/'
+current_path = os.path.join(gpmap_dir, 'simple_vs_duplicate')
 if not os.path.exists(current_path):
     os.mkdir(current_path)
 
 for metric in metrics:
     title = 'Simple v.s. Duplicate ' + metric + ' metric in GPmap N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}'.format(**p)
     filename = 'simple_vs_duplicate_' + metric + '_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.pdf'.format(**p)
-    pio.write_image(pu.dual_metric_size(df, metrics=[metric + '_sim', metric + '_dup'], max_size=max_size, title=title, symbol=['circle', 'x']), file=current_path + filename)
+    pio.write_image(pu.dual_metric_size(df, metrics=[metric + '_sim', metric + '_dup'], max_size=max_size, title=title, symbol=['circle', 'x']), file=os.path.join(current_path, filename))
 
 
 # In[ ]:
 
 
-distribution_dir = gpmap_dir + 'phenotypes_distribution/'
+distribution_dir = os.path.join(gpmap_dir, 'phenotypes_distribution')
 if not os.path.exists(distribution_dir):
     os.mkdir(distribution_dir)
 
@@ -148,7 +151,7 @@ if not os.path.exists(distribution_dir):
 # In[ ]:
 
 
-with pd.HDFStore(data_dir + file_hdf, mode='r') as store:
+with pd.HDFStore(file_hdf, mode='r') as store:
     pIDs_simple = store.select(genome_metric_file, 'columns == pIDs')
     pIDs_dup = store.select(duplicate_genome_metric_file, 'columns == pIDs')
 
@@ -156,51 +159,57 @@ with pd.HDFStore(data_dir + file_hdf, mode='r') as store:
 # In[ ]:
 
 
-current_path = distribution_dir + 'simple/'
+current_path = os.path.join(distribution_dir, 'simple')
 if not os.path.exists(current_path):
     os.mkdir(current_path)
 
 for pIDs in pIDs_simple.pIDs.unique():
-    if not os.path.exists(current_path + pIDs):
-        os.mkdir(current_path + pIDs)
+    if not os.path.exists(os.path.join(current_path, pIDs)):
+        os.mkdir(os.path.join(current_path, pIDs))
     for metric in metrics:
         title = 'Distribution of ' + metric + ' metric for phenotype ' + pIDs + '<br> in GPmap N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}'.format(**p)
-        filename = '/distribution_' + metric + '_for_phenotype_' + pIDs + '_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.pdf'.format(**p)
+        filename = 'distribution_' + metric + '_for_phenotype_' + pIDs + '_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.pdf'.format(**p)
         layout = go.Layout(title=title)
-        pio.write_image(go.Figure(data=pu.distribution_metric_phenotype_trace(pID=pIDs, file_name=genome_metric_file, metric=metric, hdf=data_dir+file_hdf), layout=layout), file=current_path + pIDs + filename)
+        pio.write_image(go.Figure(data=pu.distribution_metric_phenotype_trace(pID=pIDs, file_name=genome_metric_file, metric=metric, hdf=file_hdf), layout=layout), file=os.path.join(current_path, pIDs, filename))
 
 
 # In[ ]:
 
 
-current_path = distribution_dir + 'duplicate/'
+current_path = os.path.join(distribution_dir, 'duplicate')
 if not os.path.exists(current_path):
     os.mkdir(current_path)
 
 for pIDs in pIDs_dup.pIDs.unique():
-    if not os.path.exists(current_path + pIDs):
-        os.mkdir(current_path + pIDs)
+    if not os.path.exists(os.path.join(current_path, pIDs)):
+        os.mkdir(os.path.join(current_path, pIDs))
     for metric in metrics:
         title = 'Distribution of ' + metric + ' metric for phenotype ' + pIDs + '<br>in GPmap-duplicate N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}'.format(**p)
-        filename = '/distribution_' + metric + '_for_phenotype_' + pIDs + '_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.pdf'.format(**p)
+        filename = 'distribution_' + metric + '_for_phenotype_' + pIDs + '_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.pdf'.format(**p)
         layout = go.Layout(title=title)
-        pio.write_image(go.Figure(data=pu.distribution_metric_phenotype_trace(pID=pIDs, file_name=duplicate_genome_metric_file, metric=metric, hdf=data_dir+file_hdf), layout=layout), file=current_path + pIDs + filename)
+        pio.write_image(go.Figure(data=pu.distribution_metric_phenotype_trace(pID=pIDs, file_name=duplicate_genome_metric_file, metric=metric, hdf=file_hdf), layout=layout), file=os.path.join(current_path, pIDs, filename))
 
 
 # In[ ]:
 
 
-current_path = distribution_dir + 'comparison/'
+current_path = os.path.join(distribution_dir, 'comparison')
 if not os.path.exists(current_path):
     os.mkdir(current_path)
 
 for pIDs in pIDs_dup.pIDs.unique():
-    if not os.path.exists(current_path + pIDs):
-        os.mkdir(current_path + pIDs)
+    if not os.path.exists(os.path.join(current_path, pIDs)):
+        os.mkdir(os.join.path(current_path, pIDs))
     for metric in metrics:
         title = 'Distribution of ' + metric + ' metric for phenotype ' + pIDs + '<br>in GPmap N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}'.format(**p)
-        filename = '/distribution_' + metric + '_for_phenotype_' + pIDs + '_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.pdf'.format(**p)
+        filename = 'distribution_' + metric + '_for_phenotype_' + pIDs + '_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}_D{determinism}_S{low_colour}.pdf'.format(**p)
         layout = go.Layout(title=title)
-        traces = pu.distribution_metric_phenotype_dup_trace(pID=pIDs, genome_file=genome_metric_file, duplicate_file=duplicate_genome_metric_file, metric=metric, hdf=data_dir+file_hdf)
-        pio.write_image(go.Figure(data=traces, layout=layout), file=current_path + pIDs + filename)
+        traces = pu.distribution_metric_phenotype_dup_trace(pID=pIDs, genome_file=genome_metric_file, duplicate_file=duplicate_genome_metric_file, metric=metric, hdf=file_hdf)
+        pio.write_image(go.Figure(data=traces, layout=layout), file=os.path.join(current_path, pIDs, filename))
+
+
+# In[ ]:
+
+
+
 

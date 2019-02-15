@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 import sys, os
@@ -10,7 +10,7 @@ import numpy as np
 os.nice(15)
 
 
-# In[2]:
+# In[ ]:
 
 
 import integer_polyomino.assembly as ipa
@@ -19,13 +19,13 @@ sys.path.append(os.path.join(os.getcwd(), "..", "src", "integer_polyomino", "scr
 import graph_topo
 
 
-# In[3]:
+# In[ ]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[4]:
+# In[ ]:
 
 
 data_dir = os.path.join(os.getcwd(), "..", "data", "V" + ipa.__version__)
@@ -33,7 +33,7 @@ if not os.path.exists(data_dir):
     os.makedirs(data_dir)
 
 
-# In[26]:
+# In[ ]:
 
 
 parameters = dict()
@@ -45,25 +45,25 @@ parameters["determinism"] = 1
 parameters["table_file"] = os.path.join(data_dir, "PhenotypeTable_D{determinism}.txt".format(**parameters))
 
 
-# In[27]:
+# In[ ]:
 
 
 ipa.AssemblePlasticGenotype([0,0,1,2,0,0,0,2], **parameters)
 
 
-# In[32]:
+# In[ ]:
 
 
 ipa.AssemblePlasticGenotypeFrequency([0,0,1,2,0,0,0,2], **parameters);
 
 
-# In[30]:
+# In[ ]:
 
 
 ipa.AssemblePlasticGenotypes([[0,0,0,1,0,0,2,2]], **parameters);
 
 
-# In[35]:
+# In[ ]:
 
 
 p = dict()
@@ -81,25 +81,25 @@ p["gpmap_file"] = os.path.join(data_dir, "gpmap_N{n_genes}_C{high_colour}_T{thre
 p["threshold"] /= 100
 
 
-# In[36]:
+# In[ ]:
 
 
 minimal_genomes = gp.MinimalGenomes(**p);
 
 
-# In[37]:
+# In[ ]:
 
 
 gpmap = gp.MinimalMap(**p);
 
 
-# In[38]:
+# In[ ]:
 
 
 gp.GenotypeNeighbourhood([0,0,1,2], low_colour=-1, high_colour=2);
 
 
-# In[39]:
+# In[ ]:
 
 
 uniques = [];
@@ -107,7 +107,7 @@ for pIDs, genomes in polyo.MinimalMap(**p).items():
     uniques.extend(graph_topo.TrimTopo(genomes))
 
 
-# In[40]:
+# In[ ]:
 
 
 p["n_genes"] = 2
@@ -121,26 +121,26 @@ p["genome_metric_file"] = os.path.join(data_dir, "GenomeMetrics_N{n_genes}_C{gen
 p["set_metric_file"] = os.path.join(data_dir, "SetMetrics_N{n_genes}_C{gen_colour}_T{threshold}_B{phenotype_builds}_Cx{high_colour}_J{n_jiggle}.txt".format(**p))
 
 
-# In[41]:
+# In[ ]:
 
 
 gp.MetricSampling(**p)
 
 
-# In[43]:
+# In[ ]:
 
 
 metric_struct = gp.MetricNeighbourhood([0,0,0,1,0,0,0,2], **p)
 neighbourhood = pd.Series([str(x) for x in gp.PhenotypeNeighbourhood([0,0,0,1,0,0,0,2], **p)], dtype="category")
 
 
-# In[45]:
+# In[ ]:
 
 
 neighbourhood.value_counts()
 
 
-# In[24]:
+# In[ ]:
 
 
 
