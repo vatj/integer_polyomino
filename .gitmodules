@@ -6,4 +6,4 @@
 	url = https://github.com/catchorg/Catch2.git
 [submodule "polyomino_core"]
 	path = lib/polyomino_core
-	url = https://github.com/ASLeonard/polyomino_core.git
+	url = https://github.com/vatj/polyomino_core.git
