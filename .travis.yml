@@ -21,7 +21,7 @@ before_install:
     conda config --set always_yes yes --set changeps1 no
     conda config --add channels conda-forge
     conda update -q conda
-    conda install -q conda-build
+    conda install -q pip git
     conda create -q -n test-environment python=$CONDA
     source activate test-environment
   fi
@@ -31,7 +31,7 @@ install:
     python setup.py sdist
     python -m pip install 'pybind11>=2.3'
     python -m pip install --verbose dist/*.tar.gz
+    python -m pip install git+https://git@github.com/vatj/integer_polyomino.git
   elif [ -n "$CONDA" ]; then
-    conda build conda.recipe
-    conda install --use-local integer_polyomino
+    pip install git+https://git@github.com/vatj/integer_polyomino.git
   fi
