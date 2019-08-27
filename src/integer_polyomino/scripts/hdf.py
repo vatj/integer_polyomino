@@ -1,7 +1,7 @@
 import os, sys
 import pandas as pd
 import numpy as np
-import graph_topo as gt
+import integer_polyomino.scripts.graph_topo as gt
 
 
 def genome_metric_preprocess(df):
