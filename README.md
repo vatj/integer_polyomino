@@ -1,4 +1,5 @@
 # Genotype-Phenotype Map Integer Polyomino
+[![Build Status](https://travis-ci.org/vatj/gpmap_integer_polyomino.svg?branch=master)](https://travis-ci.org/vatj/gpmap_integer_polyomino)
 ![License Badge](https://img.shields.io/github/license/vatj/gpmap_integer_polyomino?style=plastic)
 
 Code repository for the analysis of the Genotype-Phenotype Map Properties of the Integer Polyomino Model.
@@ -14,7 +15,7 @@ This module can be installed as any python package :
 ```shell
 pip install git+https://github.com/vatj/gpmap_integer_polyomino.git
 ```
-Note that compiling requires a relatively recent C++ compiler such as clang++6 or g++7 as well as libraries such as openml
+Note that compiling requires a relatively recent C++ compiler such as g++7 as well as openmp libraries to enable parallel computing
 
 ## Quickstart
 
