@@ -15,7 +15,7 @@ This module can be installed as any python package :
 ```shell
 pip install git+https://github.com/vatj/gpmap_integer_polyomino.git
 ```
-Note that compiling requires a relatively recent C++ compiler such as clang++6 or g++7 as well as libraries such as openml
+Note that compiling requires a relatively recent C++ compiler such as g++7 as well as openmp libraries to enable parallel computing
 
 ## Quickstart
 
