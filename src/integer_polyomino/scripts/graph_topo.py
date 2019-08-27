@@ -40,7 +40,7 @@ def PartitionPhenotype(genotypes):
 
     for genotype in genotypes[1:]:
         ref_graph = Transform_Graph_From_List(genotype)
-        
+
         for key, comp_graph in network_graphs.items():
             if nx.is_isomorphic(ref_graph, comp_graph):
                 graph_clusters[str(genotype)] = key

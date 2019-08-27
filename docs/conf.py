@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'integer_polyomino'
+project = 'integer-polyomino'
 copyright = '2019, Victor Jouffrey And Alexandre Leonard'
 author = 'Victor Jouffrey And Alexandre Leonard'
 
