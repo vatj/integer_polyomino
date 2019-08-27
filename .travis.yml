@@ -4,13 +4,14 @@ notifications:
 
 language: cpp
 dist: bionic
-compiler:
-  - clang
-  - g++
+
 matrix:
   include:
     - os: linux
       env: PYTHON=3.6
+      compiler:
+        - clang
+        - g++
 before_install:
 - |
   if [ -n "$PYTHON" ]; then
