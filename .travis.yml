@@ -27,7 +27,7 @@ matrix:
       env: CONDA=3.6
 before_install:
 - |
-  if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX=${COMPILER} CC=gcc-7.4; fi
+  if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX=${COMPILER} CC=gcc-7; fi
   if [ -n "$PYTHON" ]; then
     python -m pip install --user virtualenv
     virtualenv -p python${PYTHON:0:1} venv
@@ -47,9 +47,9 @@ before_install:
 install:
 - |
   if [ -n "$PYTHON" ]; then
-    python setup.py sdist
-    python -m pip install 'pybind11>=2.3'
-    python -m pip install --verbose dist/*.tar.gz
+#    python setup.py sdist
+#    python -m pip install 'pybind11>=2.3'
+#    python -m pip install --verbose dist/*.tar.gz
     python -m pip install git+https://git@github.com/vatj/integer_polyomino.git
   elif [ -n "$CONDA" ]; then
     pip install git+https://git@github.com/vatj/integer_polyomino.git
