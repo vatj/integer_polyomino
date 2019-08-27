@@ -3,7 +3,7 @@ notifications:
   email: false
 
 language: cpp
-dist: xenial
+dist: bionic
 matrix:
   include:
     - os: linux
@@ -27,7 +27,7 @@ matrix:
       env: CONDA=3.6
 before_install:
 - |
-  if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX=${COMPILER}; fi
+  if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX=${COMPILER} CC=gcc-7.4; fi
   if [ -n "$PYTHON" ]; then
     python -m pip install --user virtualenv
     virtualenv -p python${PYTHON:0:1} venv
