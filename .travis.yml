@@ -1,9 +1,28 @@
+
+notifications:
+  email: false
+
 language: cpp
-dist: trusty
+dist: xenial
 matrix:
   include:
     - os: linux
-      env: PYTHON=3.6
+      env: PYTHON=3.6 COMPILER=clang++-7
+      addons: &clang70
+        apt:
+          packages:
+            - clang-7
+            - g++-7
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-7
+    - os: linux
+      env: PYTHON=3.6 COMPILER=g++-7
+      addons: &gcc7
+        apt:
+          packages: g++-7
+          sources:
+            - ubuntu-toolchain-r-test
     - os: linux
       env: CONDA=3.6
 before_install:
