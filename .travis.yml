@@ -21,3 +21,6 @@ install:
   elif [ -n "$CONDA" ]; then
     pip install git+https://git@github.com/vatj/gpmap_integer_polyomino.git
   fi
+script:
+- |
+  python -m pip show integer_polyomino
