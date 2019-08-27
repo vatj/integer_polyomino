@@ -1,4 +1,5 @@
 # Genotype-Phenotype Map Integer Polyomino
+[![Build Status](https://travis-ci.org/vatj/gpmap_integer_polyomino.svg?branch=master)](https://travis-ci.org/vatj/gpmap_integer_polyomino)
 ![License Badge](https://img.shields.io/github/license/vatj/gpmap_integer_polyomino?style=plastic)
 
 Code repository for the analysis of the Genotype-Phenotype Map Properties of the Integer Polyomino Model.
