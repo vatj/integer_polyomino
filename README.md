@@ -1,4 +1,5 @@
 # Genotype-Phenotype Map Integer Polyomino
+![License Badge](https://img.shields.io/github/license/vatj/gpmap_integer_polyomino?style=plastic)
 
 Code repository for the analysis of the Genotype-Phenotype Map Properties of the Integer Polyomino Model.
 
